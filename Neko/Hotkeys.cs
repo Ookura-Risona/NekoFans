@@ -39,11 +39,11 @@ public class Hotkey
 
 
     public static readonly Dictionary<Key, string> KeyNames = new() {
-        {Key.LBUTTON, "Left Mouse Button"}, {Key.RBUTTON, "Right Mouse Button"}, {Key.MBUTTON, "Middle Mouse Button"},
+        {Key.LBUTTON, "鼠标左键"}, {Key.RBUTTON, "鼠标右键"}, {Key.MBUTTON, "鼠标中键"},
 
-        {Key.SPACE, "Space"},
+        {Key.SPACE, "空格"},
         {Key.PRIOR, "Page Up"}, {Key.NEXT, "Page Down"}, {Key.END, "End"}, {Key.HOME, "Home"},
-        {Key.LEFT, "Left Arrow"}, {Key.UP, "Up Arrow"}, {Key.RIGHT, "Right Arrow"}, {Key.DOWN, "Down Arrow"},
+        {Key.LEFT, "左箭头"}, {Key.UP, "上箭头"}, {Key.RIGHT, "右箭头"}, {Key.DOWN, "下箭头"},
 
         {Key.KEY0, "0"}, {Key.KEY1, "1"}, {Key.KEY2, "2"}, {Key.KEY3, "3"}, {Key.KEY4, "4"},
         {Key.KEY5, "5"}, {Key.KEY6, "6"}, {Key.KEY7, "7"}, {Key.KEY8, "8"}, {Key.KEY9, "9"},
@@ -58,9 +58,9 @@ public class Hotkey
     };
 
     public static readonly Dictionary<HotkeyCondition, string> ConditionNames = new() {
-        {HotkeyCondition.AlwaysOn, "Always On"},
-        {HotkeyCondition.AlwaysOff, "Always Off"},
-        {HotkeyCondition.OnMouseOver, "On Mouse Over"},
+        {HotkeyCondition.AlwaysOn, "始终开启"},
+        {HotkeyCondition.AlwaysOff, "始终关闭"},
+        {HotkeyCondition.OnMouseOver, "鼠标悬停时"},
     };
 
     public Hotkey(string name)

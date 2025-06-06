@@ -27,7 +27,7 @@ public class ConfigWindow
     {
         QueueDonwloadCount = Plugin.Config.QueueDownloadCount;
         QueuePreloadCount = Plugin.Config.QueuePreloadCount;
-        Title = "Neko Fans Configuration";
+        Title = "Neko Fans 设置";
 
         // Add debug info to the title
         if (Plugin.PluginInterface.IsDev)
@@ -62,17 +62,17 @@ public class ConfigWindow
             // The Tab Bar
             if (ImGui.BeginTabBar("##tabBar"))
             {
-                if (ImGui.BeginTabItem("Look & Feel"))
+                if (ImGui.BeginTabItem("查看设置"))
                 {
                     DrawLook();
                     ImGui.EndTabItem();
                 }
-                if (ImGui.BeginTabItem("Image sources"))
+                if (ImGui.BeginTabItem("图源设置"))
                 {
                     imageSourcesGUI.Draw();
                     ImGui.EndTabItem();
                 }
-                if (ImGui.BeginTabItem("Advanced"))
+                if (ImGui.BeginTabItem("高级设置"))
                 {
                     DrawAdvanced();
                     ImGui.EndTabItem();
@@ -82,9 +82,9 @@ public class ConfigWindow
                     DrawDev();
                     ImGui.EndTabItem();
                 }
-                if (ImGui.TabItemButton(Plugin.GuiMain?.Visible ?? false ? "Hide Neko window" : "Show Neko window"))
+                if (ImGui.TabItemButton(Plugin.GuiMain?.Visible ?? false ? "隐藏 Neko 界面" : "显示 Neko 界面"))
                     Plugin.ToggleMainGui();
-                Common.ToolTip("type /neko in the chat to view the main window");
+                Common.ToolTip("在聊天中输入 /neko 来查看主界面");
             }
             ImGui.EndTabBar();
         }
@@ -100,75 +100,75 @@ public class ConfigWindow
         if (Plugin.Config.ShowHeaders)
         {
             headerImage.DrawFullWidth();
-            var text = "The total amount of images displayed by all Neko Fans users.";
+            var text = "所有 Neko Fans 用户查看的的图片总数。";
             if (!Plugin.Config.EnableTelemetry)
-                text += "\nYou are not included in the total count because you disabled \"Contribute to public image count\".";
+                text += "\n由于您禁用了“贡献公共图片计数”，因此您未计入总数";
             Common.ToolTip(text);
         }
 
         ImGui.PushItemWidth(-200 * ImGui.GetIO().FontGlobalScale);
 
         // Background opacity slider
-        if (ImGui.SliderFloat("Background opacity", ref Plugin.Config.GuiMainOpacity, 0, 100, "%3.0f%%"))
+        if (ImGui.SliderFloat("背景不透明度", ref Plugin.Config.GuiMainOpacity, 0, 100, "%3.0f%%"))
         {
             Plugin.Config.GuiMainOpacity = Math.Clamp(Plugin.Config.GuiMainOpacity, 0, 100);
             Plugin.Config.Save();
         }
-        ImGui.SameLine(); Common.HelpMarker("CTRL+click to input value.");
+        ImGui.SameLine(); Common.HelpMarker("CTRL+点击输入准确数值。");
 
         // Gif Animation Speed
-        if (ImGui.SliderFloat("GIF animation speed", ref Plugin.Config.GIFSpeed, 0, 300, "%3.0f%%"))
+        if (ImGui.SliderFloat("GIF动画速度", ref Plugin.Config.GIFSpeed, 0, 300, "%3.0f%%"))
         {
             Plugin.Config.GIFSpeed = Math.Clamp(Plugin.Config.GIFSpeed, 0, 300);
             Plugin.Config.Save();
         }
-        ImGui.SameLine(); Common.HelpMarker("How fast animimated GIFs should move. Default: 100%\nCTRL+click to input value.");
+        ImGui.SameLine(); Common.HelpMarker("GIF动画的播放速度。 默认: 100%\nCTRL+点击输入准确数值。");
 
         // Allow resizing
-        if (ImGui.Checkbox("Allow resizing", ref Plugin.Config.GuiMainAllowResize))
+        if (ImGui.Checkbox("允许调整大小", ref Plugin.Config.GuiMainAllowResize))
             Plugin.Config.Save();
-        ImGui.SameLine(); Common.HelpMarker("Show arrows near the edges of the window to resize it.");
+        ImGui.SameLine(); Common.HelpMarker("显示窗口边缘附近的箭头来调整其大小。");
 
         if (Plugin.Config.GuiMainAllowResize)
         {
             // Show resize
-            if (ImGui.Checkbox("Show resize handle", ref Plugin.Config.GuiMainShowResize))
+            if (ImGui.Checkbox("显示调整大小按钮", ref Plugin.Config.GuiMainShowResize))
                 Plugin.Config.Save();
-            ImGui.SameLine(); Common.HelpMarker("Show or hide the grey triangle in the bottom right corner of the window.");
+            ImGui.SameLine(); Common.HelpMarker("显示或隐藏窗口右下角的灰色三角形。");
         }
 
         // Lock Window
-        if (ImGui.Checkbox("Lock position", ref Plugin.Config.GuiMainLocked))
+        if (ImGui.Checkbox("锁定位置", ref Plugin.Config.GuiMainLocked))
             Plugin.Config.Save();
-        ImGui.SameLine(); Common.HelpMarker("Lock the position of the window, not allowing it to be moved.\nYou can always move the window by holdng down the selected hotkey and dragging your mouse.");
+        ImGui.SameLine(); Common.HelpMarker("锁定窗口的位置，不允许其移动。\n您始终可以通过按住选定的热键并拖动鼠标来移动窗口。");
 
         // Show Title Bar
-        if (ImGui.Checkbox("Show window title bar", ref Plugin.Config.GuiMainShowTitleBar))
+        if (ImGui.Checkbox("显示标题栏", ref Plugin.Config.GuiMainShowTitleBar))
             Plugin.Config.Save();
-        ImGui.SameLine(); Common.HelpMarker("Show or hide the bar on top of the image");
+        ImGui.SameLine(); Common.HelpMarker("显示或隐藏图片顶部的标题栏");
 
         ImGui.Separator();
 
         // Show / Hide Header
-        if (ImGui.Checkbox("Show header image", ref Plugin.Config.ShowHeaders))
+        if (ImGui.Checkbox("显示顶部图片", ref Plugin.Config.ShowHeaders))
             Plugin.Config.Save();
-        ImGui.SameLine(); Common.HelpMarker("Show or hide the image at the top of the window. It shows the total amount of images downloaded by all Neko Fans users.\n" +
-                                            "The image in the 'Image sources' Tab shows the amount of images you downloaded.");
+        ImGui.SameLine(); Common.HelpMarker("显示或隐藏设置窗口顶部的图片。它显示了所有Neko Fans用户下载的图片总量。\n" +
+                                            "“图像源”选项卡中的顶部图片显示了您下载的图像数量。");
 
         ImGui.Separator();
 
         // Slideshow Enable / Disable
-        if (ImGui.Checkbox("Slideshow", ref Plugin.Config.SlideshowEnabled))
+        if (ImGui.Checkbox("轮播模式", ref Plugin.Config.SlideshowEnabled))
         {
             Plugin.Config.Save();
             Plugin.GuiMain?.Slideshow.UpdateFromConfig();
         }
-        ImGui.SameLine(); Common.HelpMarker("Automatically display a new image after the specified interval.");
+        ImGui.SameLine(); Common.HelpMarker("在指定的时间间隔后自动显示新图片。");
 
         // Slideshow Interval
         if (Plugin.Config.SlideshowEnabled)
         {
-            if (ImGui.InputDouble("Interval", ref Plugin.Config.SlideshowIntervalSeconds, 1, 60, Helper.SecondsToString(Plugin.Config.SlideshowIntervalSeconds)))
+            if (ImGui.InputDouble("时间间隔", ref Plugin.Config.SlideshowIntervalSeconds, 1, 60, Helper.SecondsToString(Plugin.Config.SlideshowIntervalSeconds)))
             {
                 // Check for miminimum interval
                 if (Plugin.Config.SlideshowIntervalSeconds < Sources.Slideshow.MININTERVAL)
@@ -176,25 +176,25 @@ public class ConfigWindow
                 Plugin.Config.Save();
                 Plugin.GuiMain?.Slideshow.UpdateFromConfig();
             }
-            Common.ToolTip("Input the interval length in seconds.\nHolding Control while pressing the + or - button changes the inverval by 1 minute.");
-            ImGui.SameLine(); Common.HelpMarker("How long to wait before displaying a new image.");
+            Common.ToolTip("输入间隔长度（秒）。\n按住 CTRL 的同时按下 + 或 - 按钮，可将输入值更改1分钟。");
+            ImGui.SameLine(); Common.HelpMarker("显示新图片之前要等待多长时间。");
         }
 
         ImGui.Separator();
 
         // Image Alignment Submenu
-        if (ImGui.CollapsingHeader("Image alignment"))
+        if (ImGui.CollapsingHeader("图片对齐"))
             DrawAlign();
 
         // List Hotkeys
-        if (ImGui.CollapsingHeader("Hotkeys"))
+        if (ImGui.CollapsingHeader("热键"))
         {
             var keybinds = new List<(Hotkey, string)>() {
-                (Plugin.Config.Hotkeys.NextImage, "Show the next image. You can always click on the image to show the next one."),
-                (Plugin.Config.Hotkeys.ToggleWindow, "Open or close the Neko window."),
-                (Plugin.Config.Hotkeys.MoveWindow,"Move the Neko window."),
-                (Plugin.Config.Hotkeys.OpenInBrowser, "Open the current image in your default browser."),
-                (Plugin.Config.Hotkeys.CopyToClipboard, "Copy the link of the current image to the clipboard") };
+                (Plugin.Config.Hotkeys.NextImage, "显示下一张图片。您可以随时点击图片来显示下一张图片。"),
+                (Plugin.Config.Hotkeys.ToggleWindow, "打开或关闭 Neko 窗口。"),
+                (Plugin.Config.Hotkeys.MoveWindow,"移动 Neko 窗口。"),
+                (Plugin.Config.Hotkeys.OpenInBrowser, "在默认浏览器中打开当前图片。"),
+                (Plugin.Config.Hotkeys.CopyToClipboard, "将当前图片的链接复制到剪贴板") };
 
             DrawKeybinds(keybinds);
         }
@@ -208,11 +208,11 @@ public class ConfigWindow
 
         ImGui.PushItemWidth(150 * ImGui.GetIO().FontGlobalScale);
         // Image Queue System
-        ImGui.Text("Image preloading system");
-        ImGui.SameLine(); Common.HelpMarker("Images are loaded in the background, to make displaying the next image faster.");
+        ImGui.Text("图片预加载系统");
+        ImGui.SameLine(); Common.HelpMarker("让图片在后台预加载，以便更快地显示下一张图片。");
 
         // Int Downloaded
-        if (ImGui.InputInt("Downloaded##Advanced", ref QueueDonwloadCount, 1))
+        if (ImGui.InputInt("预加载数量##Advanced", ref QueueDonwloadCount, 1))
         {
             if (QueueDonwloadCount < 1 || QueueDonwloadCount > 50 || QueuePreloadCount > QueueDonwloadCount)
                 QueueDonwloadCount = Plugin.Config.QueueDownloadCount;
@@ -220,8 +220,8 @@ public class ConfigWindow
             Plugin.Config.Save();
             Plugin.GuiMain?.Queue.UpdateQueueLength();
         }
-        ImGui.SameLine(); Common.HelpMarker("The amount of images which are downloaded from the internet.\n" +
-                                            "Increasing this will result in higher RAM usage. Recomended: 5");
+        ImGui.SameLine(); Common.HelpMarker("从网络预加载的图片数量。\n" +
+                                            "增加此值将导致更高的内存占用。推荐值：5");
         if (Plugin.GuiMain != null)
         {
             var usage = Plugin.GuiMain.Queue.RAMUsage();
@@ -231,7 +231,7 @@ public class ConfigWindow
         }
 
         // Int in VRAM
-        if (ImGui.InputInt("in VRAM##Advanced", ref QueuePreloadCount, 1))
+        if (ImGui.InputInt("加载到显存##Advanced", ref QueuePreloadCount, 1))
         {
             if (QueuePreloadCount < 1 || QueuePreloadCount > 25 || QueuePreloadCount > QueueDonwloadCount)
                 QueuePreloadCount = Plugin.Config.QueuePreloadCount;
@@ -239,8 +239,8 @@ public class ConfigWindow
             Plugin.Config.Save();
             Plugin.GuiMain?.Queue.UpdateQueueLength();
         }
-        ImGui.SameLine(); Common.HelpMarker("The amount of images which are decoded and loaded into the GPU.\n" +
-                                            "Increasing this will result in higher VRAM usage. Recomended: 2");
+        ImGui.SameLine(); Common.HelpMarker("解码并加载到 GPU 中的图片数量。\n" +
+                                            "增加此值将导致更高的显存占用。推荐值：2");
         if (Plugin.GuiMain != null)
         {
             var usage = Plugin.GuiMain.Queue.VRAMUsage();
@@ -253,37 +253,37 @@ public class ConfigWindow
         ImGui.Separator();
 
         // Telemetry
-        if (ImGui.Checkbox("Contribute to public image count", ref Plugin.Config.EnableTelemetry))
+        if (ImGui.Checkbox("贡献公共图片计数", ref Plugin.Config.EnableTelemetry))
             Plugin.Config.Save();
-        ImGui.SameLine(); Common.HelpMarker("Contribute to the public image count by sending the amount of images you downloaded to the Neko Fans server.\n" +
-                                            "The Image Source name and the downloaded image count will be sent.");
+        ImGui.SameLine(); Common.HelpMarker("将您下载的图像数量发送到 Neko Fans 服务器，为公共图片计数做出贡献。\n" +
+                                            "将发送图源名称和下载的图片数量。");
 
         ImGui.Separator();
 
         // Clear Image queue
-        if (ImGui.Button("Clear all downloaded images##Advanced") && Plugin.GuiMain != null)
+        if (ImGui.Button("清除所有下载的图片##Advanced") && Plugin.GuiMain != null)
             Plugin.GuiMain.Queue.Refresh();
 
-        ImGui.SameLine(); Common.HelpMarker("This will force all images to be downloaded again.");
+        ImGui.SameLine(); Common.HelpMarker("这将强制重新下载所有图片。");
         ImGui.PopItemWidth();
 
         // Clear Image queue
-        if (ImGui.Button("Rest all faulty Image Sources##Advanced"))
+        if (ImGui.Button("重新启用所有有问题的图源##Advanced"))
             Plugin.ImageSource.ResetFaultySources();
-        ImGui.SameLine(); Common.HelpMarker("If an API has a problem, it will be disabled. It the name of the API is red, it is disabled.\n" +
-                                            "Clicking this Button will reset all disabled APIs.\n You can also disable and enable APIs in the 'Image sources' menu to reset them.");
+        ImGui.SameLine(); Common.HelpMarker("如果某个 API 有问题，它会被禁用。如果 API 名称是红色的，则表示它已被禁用。\n" +
+                                            "单击此按钮将重置所有已禁用的 API。\\n 您还可以在“图源”菜单中禁用和启用 API 来重置它们。");
 
         // Reload from Config
-        if (ImGui.Button("Reload Image Sources from config##Advanced"))
+        if (ImGui.Button("根据设置重新加载图源##Advanced"))
             Plugin.ReloadSources();
-        ImGui.SameLine(); Common.HelpMarker("This will reload all Image Sources from the state saved in the configuration file.");
+        ImGui.SameLine(); Common.HelpMarker("这将根据配置文件中保存的状态重新加载所有图源。");
 
         // Force Garbage Collection
         if (Plugin.PluginInterface.IsDevMenuOpen)
         {
             if (ImGui.Button("Force Garbage collection##Advanced"))
                 GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
-            ImGui.SameLine(); Common.HelpMarker("This will lag the game. Only press this when you know what you are doing!");
+            ImGui.SameLine(); Common.HelpMarker("这会导致游戏卡顿。请仅在您清楚自己要做什么的情况下才使用此按钮！");
         }
 
         ImGui.PopItemWidth();
@@ -302,15 +302,15 @@ public class ConfigWindow
 
         var buttonSize = new Vector2(50, 50);
         string[] names = {
-                "Top\nLeft",
-                "Top",
-                "Top\nRight",
-                "Left",
-                "Center",
-                "Right",
-                "Bottom\nLeft",
-                "Bottom",
-                "Bottom\nRight" };
+                "\n   左上",
+                "\n上",
+                "\n右上  ",
+                "    左",
+                "中间",
+                "右    ",
+                "   左下\n ",
+                "下\n ",
+                "右下   \n " };
         Configuration.ImageAlignment[] alignmentents = {
                 Configuration.ImageAlignment.TopLeft,
                 Configuration.ImageAlignment.Top,
@@ -351,11 +351,11 @@ public class ConfigWindow
             if (Plugin.GuiMain?.ImageCurrent != null)
                 ImGui.Text(Plugin.GuiMain?.ImageCurrent?.ToString());
             else
-                ImGui.Text("No image is currently displayed");
+                ImGui.Text("当前没有显示图片");
             if (Plugin.GuiMain?.ImageNext != null)
             {
                 ImGui.Spacing(); ImGui.Separator();
-                ImGui.Text("Next Image: \n" + Plugin.GuiMain?.ImageNext?.ToString());
+                ImGui.Text("下一张图片: \n" + Plugin.GuiMain?.ImageNext?.ToString());
             }
         }
 
@@ -389,10 +389,10 @@ public class ConfigWindow
         ImGui.BeginTable("Keybinds##ConfigWindow", 4, ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingFixedFit);
 
         var ConditionColumnwidth = (ConditionLongestName.Value * ImGui.GetIO().FontGlobalScale * 1.5f) - 10;
-        ImGui.TableSetupColumn("Condition##ConfigWindow", ImGuiTableColumnFlags.WidthFixed, ConditionColumnwidth);
+        ImGui.TableSetupColumn("触发条件##ConfigWindow", ImGuiTableColumnFlags.WidthFixed, ConditionColumnwidth);
         var KeyColumnwidth = (KeyLongestName.Value * ImGui.GetIO().FontGlobalScale * 1.5f) - 35;
-        ImGui.TableSetupColumn("Key##ConfigWindow", ImGuiTableColumnFlags.WidthFixed, KeyColumnwidth);
-        ImGui.TableSetupColumn("Action##ConfigWindowu", ImGuiTableColumnFlags.WidthStretch);
+        ImGui.TableSetupColumn("按键##ConfigWindow", ImGuiTableColumnFlags.WidthFixed, KeyColumnwidth);
+        ImGui.TableSetupColumn("功能##ConfigWindowu", ImGuiTableColumnFlags.WidthStretch);
         ImGui.TableHeadersRow();
 
         for (var i = 0; i < keybinds.Count; i++)
@@ -454,8 +454,8 @@ public class ConfigWindow
         }
         if (containsDuplicate)
         {
-            ImGui.TextColored(new Vector4(1, 0, 0, 1), "WARNING: Duplicate keys detected!");
-            Common.ToolTip("You have multiple actions set to the same key. This will cause issues.");
+            ImGui.TextColored(new Vector4(1, 0, 0, 1), "警告：检测到重复的按键！");
+            Common.ToolTip("您为同一个按键设置了多个操作。这会导致问题。");
         }
     }
 }

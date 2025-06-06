@@ -147,17 +147,17 @@ public class ImageSourcesWindow
         end += cursorPos;
 
         Header.Draw((start, end));
-        Common.ToolTip($"The amount of images you downloaded with Neko Fans is {Plugin.Config.LocalDownloadCount}");
+        Common.ToolTip($"您使用 Neko Fans 下载的图片数量为 {Plugin.Config.LocalDownloadCount}");
     }
 
     private static void DrawMock()
     {
 #if DEBUG
-        if (ImGui.Checkbox("Mock Imagages##Mock", ref Mock.Enabled))
+        if (ImGui.Checkbox("Mock Images##Mock", ref Mock.Enabled))
             Plugin.UpdateImageSource();
 
         ImGui.SameLine();
-        ImGui.TextDisabled("This should only be visible in debug mode");
+        ImGui.TextDisabled("这应该只在调试模式下可见");
 
         if (Mock.Enabled && ImGui.Button("Update Mock Images##Mock"))
         {
@@ -181,12 +181,12 @@ public class ImageSourcesWindow
                 preview += info.DisplayName + ", ";
             }
         }
-        preview = preview.Length > 3 ? preview[..^2] : "No categories selected";
+        preview = preview.Length > 3 ? preview[..^2] : "未选择分类";
 
         var dic = NekosLife.CategoryInfo;
         var enums = (NekosLife.Category[])Enum.GetValues(typeof(NekosLife.Category));
 
-        if (ImGui.BeginCombo("Categories##NekosLife", preview, ImGuiComboFlags.HeightLarge))
+        if (ImGui.BeginCombo("分类##NekosLife", preview, ImGuiComboFlags.HeightLarge))
         {
             foreach (var e in enums)
             {
@@ -205,7 +205,7 @@ public class ImageSourcesWindow
         if (nl.categories == NekosLife.Category.None)
         {
             ImGui.TextColored(new Vector4(1f, 0f, 0f, 1f), "WARNING:"); ImGui.SameLine();
-            ImGui.TextWrapped("No categories selected. Please select at least one image category.");
+            ImGui.TextWrapped("未选择分类。请选择至少一个图片分类。");
         }
         ImGui.Unindent(INDENT);
     }
@@ -227,9 +227,9 @@ public class ImageSourcesWindow
             }
         }
 
-        preview = preview.Length > 3 ? preview[..^2] : "No categories selected";
+        preview = preview.Length > 3 ? preview[..^2] : "未选择分类";
 
-        if (ImGui.BeginCombo("Categories##WaifuPics", preview))
+        if (ImGui.BeginCombo("分类##WaifuPics", preview))
         {
             EnumSelectable(source, "Waifu", WaifuPics.CategoriesSFW.Waifu, ref wp.sfwCategories);
             EnumSelectable(source, "Neko", WaifuPics.CategoriesSFW.Neko, ref wp.sfwCategories);
@@ -250,7 +250,7 @@ public class ImageSourcesWindow
         if (wp.sfwCategories == WaifuPics.CategoriesSFW.None && (wp.nsfwCategories == WaifuPics.CategoriesNSFW.None || !NSFW.AllowNSFW))
         {
             ImGui.TextColored(new Vector4(1f, 0f, 0f, 1f), "WARNING:"); ImGui.SameLine();
-            ImGui.TextWrapped("No categories selected. Please select at least one image category.");
+            ImGui.TextWrapped("未选择分类。请选择至少一个图片分类。");
         }
         ImGui.Unindent(INDENT);
     }
@@ -267,11 +267,11 @@ public class ImageSourcesWindow
                 preview += $"{info.DisplayName}, ";
             }
         }
-        preview = preview.Length > 3 ? preview[..^2] : "No categories selected";
+        preview = preview.Length > 3 ? preview[..^2] : "未选择分类";
 
         var enums = (NekosBest.Category[])Enum.GetValues(typeof(NekosBest.Category));
 
-        if (ImGui.BeginCombo("Categories##NekosBest", preview, ImGuiComboFlags.HeightLarge))
+        if (ImGui.BeginCombo("分类##NekosBest", preview, ImGuiComboFlags.HeightLarge))
         {
             foreach (var e in enums)
             {
@@ -288,7 +288,7 @@ public class ImageSourcesWindow
         if (nb.categories == NekosBest.Category.None)
         {
             ImGui.TextColored(new Vector4(1f, 0f, 0f, 1f), "WARNING:"); ImGui.SameLine();
-            ImGui.TextWrapped("No categories selected. Please select at least one image category.");
+            ImGui.TextWrapped("未选择分类。请选择至少一个图片分类。");
         }
         ImGui.Unindent(INDENT);
     }
@@ -308,11 +308,11 @@ public class ImageSourcesWindow
                 }
             }
         }
-        preview = preview.Length > 3 ? preview[..^2] : "No categories selected";
+        preview = preview.Length > 3 ? preview[..^2] : "未选择分类";
 
         var enums = (Waifuim.Category[])Enum.GetValues(typeof(Waifuim.Category));
 
-        if (ImGui.BeginCombo("Content##Waifuim", preview, ImGuiComboFlags.HeightLarge))
+        if (ImGui.BeginCombo("分类##Waifuim", preview, ImGuiComboFlags.HeightLarge))
         {
             foreach (var e in enums)
             {
@@ -332,7 +332,7 @@ public class ImageSourcesWindow
         if (wai.categories == Waifuim.Category.None)
         {
             ImGui.TextColored(new Vector4(1f, 0f, 0f, 1f), "WARNING:"); ImGui.SameLine();
-            ImGui.TextWrapped("No categories selected. Please select at least one image category.");
+            ImGui.TextWrapped("未选择分类。请选择至少一个图片分类。");
         }
         ImGui.Unindent(INDENT);
     }
@@ -345,7 +345,7 @@ public class ImageSourcesWindow
             var n = new string[b.Length];
             for (var i = 0; i < b.Length; i++)
             {
-                n[i] = b[i] == DogCEO.Breed.all ? "All" : DogCEO.BreedName(b[i]);
+                n[i] = b[i] == DogCEO.Breed.all ? "全部" : DogCEO.BreedName(b[i]);
             }
             DogCEOBreedNames = (b, n);
         }
@@ -353,7 +353,7 @@ public class ImageSourcesWindow
         ImGui.Indent(INDENT);
         var (breeds, names) = DogCEOBreedNames ?? default;
 
-        if (ImGui.BeginCombo("Breed##DogCeo", names[Plugin.Config.Sources.DogCEO.selected], ImGuiComboFlags.HeightLarge))
+        if (ImGui.BeginCombo("品种##DogCeo", names[Plugin.Config.Sources.DogCEO.selected], ImGuiComboFlags.HeightLarge))
         {
             for (var i = 0; i < names.Length; i++)
             {
@@ -386,7 +386,7 @@ public class ImageSourcesWindow
             var n = new string[b.Length];
             for (var i = 0; i < b.Length; i++)
             {
-                n[i] = b[i] == TheCatAPI.Breed.All ? "All" : TheCatAPI.BreedDictionary[b[i]].Name;
+                n[i] = b[i] == TheCatAPI.Breed.All ? "全部" : TheCatAPI.BreedDictionary[b[i]].Name;
             }
             TheCatAPIBreedNames = (b, n);
         }
@@ -394,7 +394,7 @@ public class ImageSourcesWindow
         ImGui.Indent(INDENT);
         var (breeds, names) = TheCatAPIBreedNames ?? default;
 
-        if (ImGui.BeginCombo("Breed##TheCatApi", names[Plugin.Config.Sources.TheCatAPI.selected], ImGuiComboFlags.HeightLarge))
+        if (ImGui.BeginCombo("品种##TheCatApi", names[Plugin.Config.Sources.TheCatAPI.selected], ImGuiComboFlags.HeightLarge))
         {
             for (var i = 0; i < names.Length; i++)
             {
@@ -481,10 +481,10 @@ public class ImageSourcesWindow
             tweetStatusColumWidth = statusWidth;
 
         ImGui.Indent(INDENT);
-        ImGui.BeginTable("TwitterConfig##Twitter", 3, ImGuiTableFlags.PadOuterX | ImGuiTableFlags.RowBg);
+        ImGui.BeginTable("Twitter设置##Twitter", 3, ImGuiTableFlags.PadOuterX | ImGuiTableFlags.RowBg);
 
-        ImGui.TableSetupColumn("Enabled##Twitter", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoResize | ImGuiTableColumnFlags.NoSort);
-        ImGui.TableSetupColumn("Search Text##Twitter", ImGuiTableColumnFlags.WidthStretch, 100f - ImGui.GetColumnWidth(0) - tweetStatusColumWidth);
+        ImGui.TableSetupColumn("已启用##Twitter", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoResize | ImGuiTableColumnFlags.NoSort);
+        ImGui.TableSetupColumn("搜索文本##Twitter", ImGuiTableColumnFlags.WidthStretch, 100f - ImGui.GetColumnWidth(0) - tweetStatusColumWidth);
         ImGui.TableSetupColumn("Status##Twitter", ImGuiTableColumnFlags.WidthFixed, tweetStatusColumWidth);
         ImGui.TableHeadersRow();
 
@@ -545,7 +545,7 @@ public class ImageSourcesWindow
         ImGui.EndTable();
 
         // Add Button
-        if (ImGui.Button("Add ##Twitter"))
+        if (ImGui.Button("添加 ##Twitter"))
         {
             Twitter.Config.Query query = new();
             Plugin.Config.Sources.Twitter.queries.Add(query);
@@ -553,15 +553,15 @@ public class ImageSourcesWindow
             Plugin.Config.Save();
         }
 
-        static string GetHelpText() => ImGui.IsPopupOpen("Twitter Help##Twitter") ? "Hide Help" : "Show Help";
+        static string GetHelpText() => ImGui.IsPopupOpen("Twitter 帮助##Twitter") ? "隐藏帮助" : "显示帮助";
 
         // Save button only when there are changes to save
         if (TwitterTableEntries.Find((e) => e.IsDirty) != null)
         {
-            var lengthSave = ImGui.CalcTextSize("Save Changes").X + (ImGui.GetStyle().FramePadding.X * 2);
+            var lengthSave = ImGui.CalcTextSize("保存更改").X + (ImGui.GetStyle().FramePadding.X * 2);
             var lengthHelp = ImGui.CalcTextSize(GetHelpText()).X + (ImGui.GetStyle().FramePadding.X * 2);
             ImGui.SameLine(((ImGui.GetWindowContentRegionMax().X - ImGui.GetWindowContentRegionMin().X - INDENT) / 2) - ((lengthSave + lengthHelp + ImGui.GetStyle().ItemSpacing.X) / 2) + INDENT);
-            if (ImGui.Button("Save Changes##Twitter"))
+            if (ImGui.Button("保存更改##Twitter"))
             {
                 // Remove all changed entries
                 foreach (var entry in TwitterTableEntries)
@@ -570,10 +570,10 @@ public class ImageSourcesWindow
                         continue;
 
                     if (entry.Query.searchText != entry.QueryDirty.searchText)
-                        Plugin.Log.Verbose("Changing Twitter Search text from: \"" + entry.Query.searchText + "\" to: \"" + entry.QueryDirty.searchText + "\"");
+                        Plugin.Log.Verbose("更改 Twitter 搜索文本: \"" + entry.Query.searchText + "\" to: \"" + entry.QueryDirty.searchText + "\"");
 
                     if (entry.Query.enabled != entry.QueryDirty.enabled)
-                        Plugin.Log.Verbose((entry.QueryDirty.enabled ? "Enabling" : "Disabling") + " Twitter Search text: \"" + entry.QueryDirty.searchText + "\"");
+                        Plugin.Log.Verbose((entry.QueryDirty.enabled ? "启用" : "禁用") + " Twitter 搜索文本: \"" + entry.QueryDirty.searchText + "\"");
 
                     // Remove the old source
                     if (entry.ImageSource != null)
@@ -606,7 +606,7 @@ public class ImageSourcesWindow
 
         // Help Button
         {
-            var lengthSave = ImGui.CalcTextSize("Save Changes").X + (ImGui.GetStyle().FramePadding.X * 2);
+            var lengthSave = ImGui.CalcTextSize("保存更改").X + (ImGui.GetStyle().FramePadding.X * 2);
             var lengthHelp = ImGui.CalcTextSize(GetHelpText()).X + (ImGui.GetStyle().FramePadding.X * 2);
             // If there is a Save button, align it to the right
             if (TwitterTableEntries.Find((e) => e.IsDirty) != null)
@@ -624,9 +624,9 @@ public class ImageSourcesWindow
         // Remove Button (Right align)
         if (selectedTwitterEntry >= 0)
         {
-            var length = ImGui.CalcTextSize("Remove").X;
+            var length = ImGui.CalcTextSize("清除").X;
             ImGui.SameLine(ImGui.GetWindowContentRegionMax().X - ImGui.GetWindowContentRegionMin().X - length);
-            if (ImGui.Button("Remove##Twitter") && selectedTwitterEntry >= 0)
+            if (ImGui.Button("清除##Twitter") && selectedTwitterEntry >= 0)
             {
                 if (!Plugin.Config.Sources.Twitter.queries.Remove(TwitterTableEntries[selectedTwitterEntry].Query))
                 {
@@ -663,7 +663,7 @@ public class ImageSourcesWindow
         ImGui.SetNextWindowSizeConstraints(minSize, minSize * 20);
 
         // Begin Window
-        if (!ImGui.Begin("Neko Fans Twitter Help##NekoTwitter", ref twitterHelpOpen, ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse)) return;
+        if (!ImGui.Begin("Neko Fans Twitter 帮助##NekoTwitter", ref twitterHelpOpen, ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse)) return;
 
         // Close Button
         ImGui.SetCursorPosX(ImGui.GetWindowContentRegionMax().X - 20f - ImGui.CalcTextSize("X").X);
@@ -677,30 +677,30 @@ public class ImageSourcesWindow
         ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0f, spacing.Y));
 
         // How to use the Table:
-        ImGui.TextColored(TwitterLight, "How to use the Table:");
+        ImGui.TextColored(TwitterLight, "怎么使用这个表:");
         ImGui.Separator();
-        ImGui.TextWrapped("The table is used to add and remove Twitter searches. The status column shows the current status of the API request and displays how many matching Tweets were found. "
-                        + "Make sure to enable each row you want to use and click on the \"Save Changes\" button to save your changes. \n"
-                        + "New rows can be added by clicking on the \"Add\" button. Rows can be removed by selecting them and clicking on the \"Remove\" button.\n"
-                        + "If the search text is invalid, the input field will be colored red.");
+        ImGui.TextWrapped("该表用于添加和删除 Twitter 搜索。状态列显示 API 请求的当前状态，并显示找到的匹配推文数量。 "
+                        + "请确保启用要使用的每一行，然后点击“保存更改”按钮以保存更改。 \n"
+                        + "可以通过点击“添加”按钮添加新行。可以通过选择行并点击“删除”按钮来删除行。\n"
+                        + "如果搜索文本无效，输入字段将显示为红色。");
 
         // Search Text
         ImGui.Spacing(); ImGui.Spacing();
-        ImGui.TextColored(TwitterLight, "How to select the Tweets you want to see:");
+        ImGui.TextColored(TwitterLight, "如何选择您想查看的推文:");
         ImGui.Separator();
 
         // Button to Twitter Advanced Search
         ImGui.Spacing();
-        if (ImGui.Button("Open Twitter Advanced Search", new Vector2(ImGui.GetWindowContentRegionMax().X - ImGui.GetStyle().WindowPadding.X, 25f * fontScale)))
+        if (ImGui.Button("打开 Twitter 高级搜索", new Vector2(ImGui.GetWindowContentRegionMax().X - ImGui.GetStyle().WindowPadding.X, 25f * fontScale)))
             Helper.OpenInBrowser("https://twitter.com/search-advanced");
 
-        ImGui.TextWrapped("There are 2 modes. You can either view Tweets from a specific user or all Tweets that match a query. The status column will show \"OK\" if you are viewing tweets from a specific user or the amount of tweets mathcing a query.");
+        ImGui.TextWrapped("有两种模式。您可以查看特定用户的推文，也可以查看符合查询条件的所有推文。如果您正在查看特定用户的推文或符合查询条件的推文数量，状态栏将显示“OK”。");
 
         // By User  
         ImGui.Spacing();
-        ImGui.TextColored(TwitterLight, "Search by Username:");
+        ImGui.TextColored(TwitterLight, "按用户名搜索:");
         Common.TextWithColorsWrapped(new Common.Segment[]{
-            new("The last 600 Tweets from a specific user can be viewed by entering a Twitter username. If the user exists, then the status column will show the text \"OK\""),
+            new("输入 Twitter 用户名即可查看特定用户的最近 600 条推文。如果该用户存在，则状态栏将显示“OK”字样"),
         });
         ImGui.Spacing();
         Common.TextWithColorsWrapped(new Common.Segment[]{
@@ -712,49 +712,49 @@ public class ImageSourcesWindow
 
         // By Query  
         ImGui.Spacing();
-        ImGui.TextColored(TwitterLight, "Search by Query:");
+        ImGui.TextColored(TwitterLight, "按查询搜索:");
         Common.TextWithColorsWrapped(new Common.Segment[]{
-            new("You can combine multiple search terms. Only Tweets that were posted in the last 7 days will be shown. The status column will show the amount of matching Tweets."),
+            new("您可以组合多个搜索词。系统仅显示过去 7 天内发布的推文。状态栏将显示匹配的推文数量。"),
         });
         ImGui.Spacing();
         Common.TextWithColorsWrapped(new Common.Segment[]{
             new("#hashtag",         Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
             new(" (e.g. "),
             new("#gposers",         Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
-            new(") Matches any Tweet containing the hashtag #gposers\n"),
+            new(") 匹配任何包含主题标签 #gposers 的推文\n"),
             new("keyword",          Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
             new(" (e.g. "),
             new("neko",             Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
-            new(") Matches any Tweet that contains the word \"neko\"\n"),
+            new(") 匹配任何包含单词“neko”的推文\n"),
             new("@username",        Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
             new(" (e.g. "),
             new("@ff_xiv_en",       Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
-            new(") Matches any Tweet that mentions the user @ff_xiv_en\n"),
+            new(") 匹配任何提及用户@ff_xiv_en 的推文\n"),
             new("lang:language",    Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
             new(" (e.g. "),
             new("lang:en",          Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
-            new(") Matches any Tweet which is classified as English\n"),
+            new(") 匹配任何被归类为英语的推文\n"),
             new("a OR b",           Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
             new(" (e.g. "),
             new("Miqo'te OR Viera", Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
-            new(") Matches any Tweet containing the word \"Miqo'te\" or \"Viera\"\n"),
+            new(") 匹配任何包含单词“Miqo'te”或“Viera”的推文\"\n"),
             new("-a",               Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
             new(" (e.g. "),
             new("-Lalafell",        Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
-            new(") Matches any Tweet which doesn't contain the word \"Lalafell\""),
+            new(") 匹配任何不包含单词“Lalafell”的推文"),
         });
         ImGui.Spacing();
         ImGui.Spacing();
         Common.TextWithColorsWrapped(new Common.Segment[]{
-            new("Here is an example of what a query could look like:\n"),
+            new("以下是查询的示例:\n"),
             new("lang:en #ffxiv #gposers -#miqote -#aura -#lala -#lalafell -(#meme OR funny)", Dalamud.Interface.Colors.ImGuiColors.DalamudGrey),
         });
         ImGui.Spacing();
         Common.TextWithColorsWrapped(new Common.Segment[]{
-            new("There are many more options. For more information, please visit the "),
+            new("还有更多选择。更多信息，请访问 "),
         }); ImGui.SameLine();
         // Clickable Link
-        Common.ClickLinkWrapped("Twitter API Documentation.", () => Helper.OpenInBrowser("https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"));
+        Common.ClickLinkWrapped("Twitter API 文档。", () => Helper.OpenInBrowser("https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"));
 
         // Itemspacing
         ImGui.PopStyleVar();
@@ -784,11 +784,11 @@ public class ImageSourcesWindow
 
         if (hasSome && !hasNoneFaulted)
         {
-            ImGui.TextWrapped("All image sources are currently faulted. You can disable and enable them again to restart them.");
+            ImGui.TextWrapped("所有图源目前均出现故障。您可以禁用并重新启用它们以重启它们。");
             return;
         }
 
-        ImGui.TextWrapped("No Image source is selected. This makes loading new images impossible.");
+        ImGui.TextWrapped("未选择图源。这会导致无法加载新图片。");
     }
 
     private static void EnumSelectable<T>(ImageSourceConfig source, string name, T single, ref T combined) where T : Enum

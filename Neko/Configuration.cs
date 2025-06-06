@@ -24,11 +24,11 @@ public class Configuration : IPluginConfiguration
 
     public class HotkeyConfig
     {
-        public Hotkey NextImage = new("Next Image", HotkeyCondition.OnMouseOver, Key.SPACE);
-        public Hotkey ToggleWindow = new("Toggle Visibility", HotkeyCondition.OnMouseOver, Key.MBUTTON);
-        public Hotkey MoveWindow = new("Move Window", HotkeyCondition.OnMouseOver, Key.RBUTTON);
-        public Hotkey OpenInBrowser = new("Open in Browser", HotkeyCondition.OnMouseOver, Key.B);
-        public Hotkey CopyToClipboard = new("Copy to Clipboard", HotkeyCondition.OnMouseOver, Key.C);
+        public Hotkey NextImage = new("下一张图片", HotkeyCondition.OnMouseOver, Key.SPACE);
+        public Hotkey ToggleWindow = new("切换窗口可见性", HotkeyCondition.OnMouseOver, Key.MBUTTON);
+        public Hotkey MoveWindow = new("移动窗口", HotkeyCondition.OnMouseOver, Key.RBUTTON);
+        public Hotkey OpenInBrowser = new("用浏览器打开", HotkeyCondition.OnMouseOver, Key.B);
+        public Hotkey CopyToClipboard = new("复制到剪贴板", HotkeyCondition.OnMouseOver, Key.C);
     }
 
     public enum ImageAlignment
@@ -100,7 +100,7 @@ public class Configuration : IPluginConfiguration
         }
         catch (System.Exception ex)
         {
-            Plugin.Log.Warning(ex, "Could not load Neko Fans config");
+            Plugin.Log.Warning(ex, "无法加载 Neko Fans 设置");
             return new Configuration();
         }
     }

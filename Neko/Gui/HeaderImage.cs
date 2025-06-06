@@ -144,14 +144,14 @@ public abstract class HeaderImage : ImageSource
         {
             foreach (var ex in task.Exception?.Flatten().InnerExceptions ?? new(Array.Empty<Exception>()))
             {
-                Plugin.Log.Warning(ex, $"Error while downloading header image: {GetType().Name}. Fault count: {error_count}");
+                Plugin.Log.Warning(ex, $"下载标题为: {GetType().Name} 的图片时出现问题. 故障计数: {error_count}");
             }
             Interlocked.Increment(ref error_count);
             lastFaulted = DateTime.Now;
         }
         else
         {
-            Plugin.Log.Verbose($"Updated header image: {GetType().Name}");
+            Plugin.Log.Verbose($"更新了标题图片: {GetType().Name}");
             image = task.Result;
             lastUpdate = DateTime.Now;
         }
